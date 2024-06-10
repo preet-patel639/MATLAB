@@ -1,0 +1,82 @@
+import tkinter as tk
+from tkinter import messagebox, simpledialog
+
+class ContactBook:
+    def __init__(self):
+        self.contacts = {}
+
+    def add_contact(self, name, phone, email):
+        self.contacts[name] = {'phone': phone, 'email': email}
+
+    def view_contacts(self):
+        return self.contacts
+
+    def search_contact(self, name):
+        return self.contacts.get(name, None)
+
+    def update_contact(self, name, phone, email):
+        if name in self.contacts:
+            self.contacts[name] = {'phone': phone, 'email': email}
+            return True
+        return False
+
+    def delete_contact(self, name):
+        if name in self.contacts:
+            del self.contacts[name]
+            return True
+        return False
+
+# GUI Implementation
+def add_contact_ui():
+    name = simpledialog.askstring("Input", "Enter contact name:")
+    if name:
+        phone = simpledialog.askstring("Input", "Enter contact phone:")
+        email = simpledialog.askstring("Input", "Enter contact email:")
+        contact_book.add_contact(name, phone, email)
+        messagebox.showinfo("Success", "Contact added successfully")
+
+def view_contacts_ui():
+    contacts = contact_book.view_contacts()
+    contact_list = "\n".join([f"{name}: {info['phone']}, {info['email']}" for name, info in contacts.items()])
+    messagebox.showinfo("Contacts", contact_list if contact_list else "No contacts found")
+
+def search_contact_ui():
+    name = simpledialog.askstring("Input", "Enter contact name to search:")
+    contact = contact_book.search_contact(name)
+    if contact:
+        messagebox.showinfo("Contact Found", f"Name: {name}\nPhone: {contact['phone']}\nEmail: {contact['email']}")
+    else:
+        messagebox.showinfo("Not Found", "Contact not found")
+
+def update_contact_ui():
+    name = simpledialog.askstring("Input", "Enter contact name to update:")
+    if name:
+        phone = simpledialog.askstring("Input", "Enter new contact phone:")
+        email = simpledialog.askstring("Input", "Enter new contact email:")
+        if contact_book.update_contact(name, phone, email):
+            messagebox.showinfo("Success", "Contact updated successfully")
+        else:
+            messagebox.showinfo("Not Found", "Contact not found")
+
+def delete_contact_ui():
+    name = simpledialog.askstring("Input", "Enter contact name to delete:")
+    if contact_book.delete_contact(name):
+        messagebox.showinfo("Success", "Contact deleted successfully")
+    else:
+        messagebox.showinfo("Not Found", "Contact not found")
+
+# Create the main window
+window = tk.Tk()
+window.title("Contact Book")
+
+contact_book = ContactBook()
+
+# Add buttons to the window
+tk.Button(window, text="Add Contact", command=add_contact_ui).pack(pady=10)
+tk.Button(window, text="View Contacts", command=view_contacts_ui).pack(pady=10)
+tk.Button(window, text="Search Contact", command=search_contact_ui).pack(pady=10)
+tk.Button(window, text="Update Contact", command=update_contact_ui).pack(pady=10)
+tk.Button(window, text="Delete Contact", command=delete_contact_ui).pack(pady=10)
+
+# Start the main loop
+window.mainloop().
