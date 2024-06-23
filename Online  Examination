@@ -1,0 +1,86 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class ExaminationSystem {
+    private Map<String, Student> students;
+    private Map<String, Examiner> examiners;
+    private Map<String, Exam> exams;
+
+    public ExaminationSystem() {
+        students = new HashMap<>();
+        examiners = new HashMap<>();
+        exams = new HashMap<>();
+    }
+
+    public void registerStudent(String username, String password) {
+        students.put(username, new Student(username, password));
+    }
+
+    public void registerExaminer(String username, String password) {
+        examiners.put(username, new Examiner(username, password));
+    }
+
+    public Student loginStudent(String username, String password) {
+        Student student = students.get(username);
+        if (student != null && student.authenticate(password)) {
+            return student;
+        }
+        return null;
+    }
+
+    public Examiner loginExaminer(String username, String password) {
+        Examiner examiner = examiners.get(username);
+        if (examiner != null && examiner.authenticate(password)) {
+            return examiner;
+        }
+        return null;
+    }
+
+    public void addExam(String examName) {
+        exams.put(examName, new Exam(examName));
+    }
+
+    public Exam getExam(String examName) {
+        return exams.get(examName);
+    }
+
+    public static void main(String[] args) {
+        ExaminationSystem system = new ExaminationSystem();
+        Scanner scanner = new Scanner(System.in);
+
+        // Example usage
+        system.registerStudent("student1", "password1");
+        system.registerExaminer("examiner1", "password1");
+
+        Examiner examiner = system.loginExaminer("examiner1", "password1");
+        if (examiner != null) {
+            system.addExam("Java Exam");
+            Exam javaExam = system.getExam("Java Exam");
+            examiner.addQuestion(javaExam, new Question("What is Java?", new String[]{"A programming language", "A coffee", "An island", "A car"}, 0));
+        }
+
+        Student student = system.loginStudent("student1", "password1");
+        if (student != null) {
+            Exam javaExam = system.getExam("Java Exam");
+            if (javaExam != null) {
+                for (Question question : javaExam.getQuestions()) {
+                    System.out.println(question.getQuestionText());
+                    String[] options = question.getOptions();
+                    for (int i = 0; i < options.length; i++) {
+                        System.out.println((i + 1) + ": " + options[i]);
+                    }
+                    int answer = scanner.nextInt();
+                    if (question.checkAnswer(answer - 1)) {
+                        System.out.println("Correct!");
+                    } else {
+                        System.out.println("Incorrect.");
+                    }
+                }
+            }
+        }
+
+        scanner.close();
+    }
+}
+. 
