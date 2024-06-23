@@ -1,0 +1,92 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class Library {
+    private Map<String, Book> books;
+    private Map<String, Member> members;
+    private Map<String, Librarian> librarians;
+
+    public Library() {
+        books = new HashMap<>();
+        members = new HashMap<>();
+        librarians = new HashMap<>();
+    }
+
+    public void addBook(Book book) {
+        books.put(book.getIsbn(), book);
+    }
+
+    public void removeBook(String isbn) {
+        books.remove(isbn);
+    }
+
+    public Book findBookByIsbn(String isbn) {
+        return books.get(isbn);
+    }
+
+    public void registerMember(String username, String password) {
+        members.put(username, new Member(username, password));
+    }
+
+    public void registerLibrarian(String username, String password) {
+        librarians.put(username, new Librarian(username, password));
+    }
+
+    public Member loginMember(String username, String password) {
+        Member member = members.get(username);
+        if (member != null && member.authenticate(password)) {
+            return member;
+        }
+        return null;
+    }
+
+    public Librarian loginLibrarian(String username, String password) {
+        Librarian librarian = librarians.get(username);
+        if (librarian != null && librarian.authenticate(password)) {
+            return librarian;
+        }
+        return null;
+    }
+
+    public boolean borrowBook(String isbn) {
+        Book book = findBookByIsbn(isbn);
+        if (book != null && book.isAvailable()) {
+            book.borrowBook();
+            return true;
+        }
+        return false;
+    }
+
+    public void returnBook(String isbn) {
+        Book book = findBookByIsbn(isbn);
+        if (book != null) {
+            book.returnBook();
+        }
+    }
+
+    public static void main(String[] args) {
+        Library library = new Library();
+        Scanner scanner = new Scanner(System.in);
+
+        // Example usage
+        library.registerLibrarian("librarian1", "password1");
+        library.registerMember("member1", "password1");
+
+        Librarian librarian = library.loginLibrarian("librarian1", "password1");
+        if (librarian != null) {
+            librarian.addBook(library, new Book("Java Programming", "Author A", "1234567890"));
+            librarian.addBook(library, new Book("Python Programming", "Author B", "0987654321"));
+        }
+
+        Member member = library.loginMember("member1", "password1");
+        if (member != null) {
+            boolean borrowed = library.borrowBook("1234567890");
+            System.out.println("Borrowed: " + borrowed); // Output: Borrowed: true
+            library.returnBook("1234567890");
+            System.out.println("Returned: " + library.findBookByIsbn("1234567890").isAvailable()); // Output: Returned: true
+        }
+
+        scanner.close();
+    }
+}
