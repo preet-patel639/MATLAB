@@ -1,1 +1,74 @@
-Online  Train Reservations (Ticket-Booking)  System.
+Online  Train Reservations (Ticket-Booking)
+System  using  Java.
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ReservationSystem {
+    private List<Train> trains;
+    private List<Ticket> tickets;
+
+    public ReservationSystem() {
+        this.trains = new ArrayList<>();
+        this.tickets = new ArrayList<>();
+    }
+
+    public void addTrain(Train train) {
+        trains.add(train);
+    }
+
+    public Ticket bookTicket(int trainNumber, Passenger passenger) {
+        for (Train train : trains) {
+            if (train.getTrainNumber() == trainNumber) {
+                if (train.bookSeat()) {
+                    Ticket ticket = new Ticket(train, passenger, train.getTotalSeats() - train.getAvailableSeats());
+                    tickets.add(ticket);
+                    return ticket;
+                }
+            }
+        }
+        return null; // Booking failed
+    }
+
+    public boolean cancelTicket(Ticket ticket) {
+        if (tickets.remove(ticket)) {
+            ticket.getTrain().cancelSeat();
+            return true;
+        }
+        return false;
+    }
+
+    public List<Train> getTrains() {
+        return trains;
+    }
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public static void main(String[] args) {
+        ReservationSystem reservationSystem = new ReservationSystem();
+
+        Train train1 = new Train(101, "Express A", 100);
+        Train train2 = new Train(102, "Express B", 50);
+
+        reservationSystem.addTrain(train1);
+        reservationSystem.addTrain(train2);
+
+        Passenger passenger1 = new Passenger("John Doe", 30);
+        Passenger passenger2 = new Passenger("Jane Smith", 25);
+
+        Ticket ticket1 = reservationSystem.bookTicket(101, passenger1);
+        Ticket ticket2 = reservationSystem.bookTicket(101, passenger2);
+
+        System.out.println(ticket1);
+        System.out.println(ticket2);
+
+        reservationSystem.cancelTicket(ticket1);
+
+        System.out.println("Available seats in " + train1.getTrainName() + ": " + train1.getAvailableSeats());
+    }
+}
+.
+
