@@ -1,0 +1,128 @@
+HTML  Code.
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Landing Page</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h2>Our Mission</h2>
+        <p>To deliver the best service possible with a focus on quality and customer satisfaction.</p>
+    </section>
+    
+    <section class="content">
+        <div class="column">
+            <h3>Column 1</h3>
+            <p>This is the content of the first column. You can add more text here to describe your services or products.</p>
+        </div>
+        <div class="column">
+            <h3>Column 2</h3>
+            <p>This is the content of the second column. Use this space to provide additional information about what you offer.</p>
+        </div>
+        <div class="column">
+            <h3>Column 3</h3>
+            <p>This is the content of the third column. Highlight key features or benefits of your service here.</p>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 Your Company Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>.
+
+
+
+
+CSS   Code.
+(Style.CSS).
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.hero {
+    background: #e2e2e2;
+    color: #333;
+    padding: 2rem;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+}
+
+.column {
+    background: #fff;
+    padding: 1rem;
+    margin: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    flex-basis: 30%;
+}
+
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+.
+
+
+
+
+
